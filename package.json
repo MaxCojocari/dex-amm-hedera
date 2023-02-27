@@ -1,0 +1,24 @@
+{
+  "name": "dex-amm-hedera",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxCojocari/dex-amm-hedera.git"
+  },
+  "keywords": [],
+  "author": "MaxCojocari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxCojocari/dex-amm-hedera/issues"
+  },
+  "homepage": "https://github.com/MaxCojocari/dex-amm-hedera#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "hardhat": "^2.12.7"
+  }
+}

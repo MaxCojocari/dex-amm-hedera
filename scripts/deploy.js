@@ -1,30 +1,24 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat");
+const { hethers } = require('@hashgraph/hethers');
+const helloHederaJSON = require("../artifacts/contracts/HelloHedera.sol/HelloHedera.json");
+require("dotenv").config();
 
-async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+const provider = hethers.providers.getDefaultProvider('testnet');
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+const main = async () => {
+  console.log(1);
+  const signer = new hethers.Wallet(process.env.PRIVATE_KEY, provider).connectAccount(process.env.ACCOUNT_ID);
+  console.log(2);
+  const factory = new hethers.ContractFactory(helloHederaJSON.abi, helloHederaJSON.bytecode, signer);
+  console.log(3);
+  const helloHedera = await factory.deploy("Hello Hedera!", { gasLimit: 300000 });
+  console.log(4);
 
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  console.log(await helloHedera.get_message({ gasLimit: 30000 }));
+  console.log(await helloHedera.get_owner({ gasLimit: 30000 }));
+  console.log(await helloHedera.owner({ gasLimit: 30000 }));
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

@@ -46,4 +46,11 @@ contract SafeHederaTokenService is HederaTokenService {
         require(responseCode == HederaResponseCodes.SUCCESS, "Safe token transfer failed!");
         emit Transfer(sender, receiver, uint64(amount));
     }
+
+    function safeTransferTokenRouter(address token, address sender, address receiver, uint256 amount) internal {
+        int32 responseCode;
+        (responseCode) = HederaTokenService.transferTokenRouter(token, sender, receiver, amount.toInt64());
+        require(responseCode == HederaResponseCodes.SUCCESS, "Safe token transfer router failed!");
+        emit Transfer(sender, receiver, uint64(amount));
+    }
 }

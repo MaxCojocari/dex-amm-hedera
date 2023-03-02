@@ -10,12 +10,12 @@ import './hedera/IHederaTokenService.sol';
 import './hedera/KeyHelper.sol';
 
 contract UniswapV2Pair is IUniswapV2Pair, SafeHederaTokenService, KeyHelper {
-    address public immutable factory;
-    address public immutable token0;
-    address public immutable token1;
-    address public lpToken;
+    address public immutable override factory;
+    address public immutable override token0;
+    address public immutable override token1;
+    address public override lpToken;
     
-    uint32 public constant MINIMUM_LIQUIDITY = 10**3;
+    uint32 public constant override MINIMUM_LIQUIDITY = 10**3;
     uint112 private reserve0;
     uint112 private reserve1;
     uint256 public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
